@@ -2,12 +2,18 @@ module Rubill
   class Base
     attr_accessor :remote_record
 
-    delegate :[], to: :remote_record
-
     class NotFound < StandardError; end
 
     def initialize(remote)
       self.remote_record = remote
+    end
+
+    def [](key)
+      remote_record.send(:[], key)
+    end
+
+    def []=(key, value)
+      remote_record.send(:[]=, key, value)
     end
 
     def self.active

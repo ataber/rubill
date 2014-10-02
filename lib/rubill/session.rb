@@ -1,3 +1,7 @@
+require "httparty"
+require "json"
+require "singleton"
+
 module Rubill
   class Session
     include HTTParty
@@ -7,11 +11,14 @@ module Rubill
 
     CREDENTIALS = Rubill.configuration.to_hash
 
-    delegate :_post, to: self
-
     attr_accessor :session_id
 
     def initialize
+      config = Rubill.configuration
+      if missing = (!config.missing_keys.empty? && config.missing_keys)
+        raise "Missing key(s) in configuration: #{missing}"
+      end
+
       login
     end
 
@@ -99,8 +106,13 @@ module Rubill
       {"Content-Type" => "application/x-www-form-urlencoded"}
     end
 
+    def _post(url, options)
+      self.class.post(url, options)
+    end
+
     def self._post(url, options)
-      result = JSON.parse(post(url, options).body).with_indifferent_access
+      result = JSON.parse(post(url, options).body, symbolize_names: true)
+
       raise result[:response_data][:error_message] unless result[:response_status] == 0
       result[:response_data]
     end
