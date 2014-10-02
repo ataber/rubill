@@ -19,7 +19,7 @@ module Rubill
     def self.active
       # There is also a way to list only active via the API but it's opaque
       # and unlikely to be much faster than doing it in Ruby
-      all_remote.select do |record|
+      all.select do |record|
         record[:isActive] == "1"
       end
     end
