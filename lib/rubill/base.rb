@@ -33,7 +33,7 @@ module Rubill
     end
 
     def delete
-      self.class.delete(remote_record[:id])
+      self.class.delete(id)
     end
 
     def self.find(id)
