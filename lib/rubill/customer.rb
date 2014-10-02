@@ -1,7 +1,7 @@
 module Rubill
   class Customer < Base
     def self.find_by_name(name)
-      record = active_remote.detect do |d|
+      record = active.detect do |d|
         d[:name] == name
       end
 

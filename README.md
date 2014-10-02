@@ -3,8 +3,6 @@ rubill
 
 Ruby interface to Bill.com's API
 
-======
-
 Bill.com's own documentation: http://developer.bill.com/api-documentation/overview/
 
 ======
