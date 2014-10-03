@@ -5,13 +5,11 @@ module Rubill
     end
 
     def amount
-      # to_s then to_d because it returns a float
-      remote_record[:amount].to_s.to_d
+      remote_record[:amount]
     end
 
     def amount_due
-      # to_s then to_d because it returns a float
-      remote_record[:amountDue].to_s.to_d
+      remote_record[:amountDue]
     end
 
     def self.invoice_line_item(amount, description, item_id)
