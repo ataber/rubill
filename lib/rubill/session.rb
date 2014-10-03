@@ -11,7 +11,7 @@ module Rubill
 
     CREDENTIALS = Rubill.configuration.to_hash
 
-    attr_accessor :session_id
+    attr_accessor :id
 
     def initialize
       config = Rubill.configuration
@@ -62,7 +62,7 @@ module Rubill
       loop do
         chunk = _post("/List/#{entity}.json", options(start: start, max: step))
 
-        if chunk && !chunk.empty?
+        if !chunk.empty?
           result += chunk
           start += step
         else
@@ -74,7 +74,7 @@ module Rubill
     end
 
     def login
-      self.session_id = self.class.login
+      self.id = self.class.login
     end
 
     def self.login
@@ -95,7 +95,7 @@ module Rubill
       {
         headers: self.class.default_headers,
         query: {
-          sessionId: session_id,
+          sessionId: id,
           devKey: CREDENTIALS["dev_key"],
           data: data.to_json,
         },
