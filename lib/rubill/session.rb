@@ -60,9 +60,9 @@ module Rubill
       start = 0
       step = 999
       loop do
-        chunk = _post("/List/#{entity}.json", options(start: start, max: step)).presence
+        chunk = _post("/List/#{entity}.json", options(start: start, max: step))
 
-        if chunk
+        if chunk && !chunk.empty?
           result += chunk
           start += step
         else
@@ -107,7 +107,7 @@ module Rubill
     end
 
     def _post(url, options)
-      self.class.post(url, options)
+      self.class._post(url, options)
     end
 
     def self._post(url, options)

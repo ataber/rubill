@@ -19,7 +19,7 @@ module Rubill
 
     def create_credit(amount, description="")
       data = {
-        customerId: remote_record.id,
+        customerId: id,
         amount: amount.to_f,
         description: description,
         paymentType: "5",
