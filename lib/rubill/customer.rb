@@ -10,11 +10,11 @@ module Rubill
     end
 
     def self.receive_payment(opts)
-      session.receive_payment(opts)
+      ReceivedPayment.create(opts)
     end
 
     def self.void_received_payment(id)
-      session.void_received_payment(id)
+      ReceivedPayment.void(id)
     end
 
     def create_credit(amount, description="")
