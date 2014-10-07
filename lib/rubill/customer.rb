@@ -9,24 +9,17 @@ module Rubill
       new(record)
     end
 
-    def self.receive_payment(opts)
-      ReceivedPayment.create(opts)
-    end
-
-    def self.void_received_payment(id)
-      ReceivedPayment.void(id)
-    end
-
-    def create_credit(amount, description="")
+    def create_credit(amount, description="", syncReference="")
       data = {
         customerId: id,
         amount: amount.to_f,
         description: description,
+        syncReference: syncReference,
         paymentType: "5",
         paymentDate: Date.today,
       }
 
-      self.class.receive_payment(data)
+      ReceivedPayment.create(data)
     end
 
     def self.remote_class_name
