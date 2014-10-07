@@ -45,7 +45,7 @@ module Rubill
     end
 
     def self.update(data)
-      session.update(remote_class_name, data)
+      session.update(remote_class_name, data.merge({entity: remote_class_name}))
     end
 
     def self.delete(id)
