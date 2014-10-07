@@ -8,7 +8,7 @@ module Rubill
     include Singleton
 
     class << self
-      attr_accessor :configuration
+      attr_writer :configuration
     end
 
     class APIError < StandardError; end
@@ -125,8 +125,11 @@ module Rubill
     end
 
     def self.configure(&block)
-      self.configuration ||= Configuration.new
       yield(configuration)
+    end
+
+    def self.configuration
+      @configuration ||= Configuration.new
     end
 
     class Configuration
