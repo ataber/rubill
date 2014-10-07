@@ -1,5 +1,5 @@
 module Rubill
-  class ReceivedPay < Base
+  class ReceivedPayment < Base
     def self.create(opts)
       session.receive_payment(opts)
     end

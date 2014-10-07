@@ -1,5 +1,5 @@
 module Rubill
-  class SentPay < Base
+  class SentPayment < Base
     def self.create(opts)
       session.send_payment(opts)
     end

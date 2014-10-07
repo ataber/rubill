@@ -7,14 +7,18 @@ module Rubill
     include HTTParty
     include Singleton
 
-    base_uri "https://api.bill.com/api/v2"
+    class << self
+      attr_accessor :configuration
+    end
 
-    CREDENTIALS = Rubill.configuration.to_hash
+    class APIError < StandardError; end
+
+    base_uri "https://api.bill.com/api/v2"
 
     attr_accessor :id
 
     def initialize
-      config = Rubill.configuration
+      config = self.class.configuration
       if missing = (!config.missing_keys.empty? && config.missing_keys)
         raise "Missing key(s) in configuration: #{missing}"
       end
@@ -81,10 +85,10 @@ module Rubill
       login_options = {
         headers: default_headers,
         query: {
-          password: CREDENTIALS["password"],
-          userName: CREDENTIALS["user_name"],
-          devKey: CREDENTIALS["dev_key"],
-          orgId: CREDENTIALS["org_id"],
+          password: configuration.password,
+          userName: configuration.user_name,
+          devKey: configuration.dev_key,
+          orgId: configuration.org_id,
         }
       }
       login = _post("/Login.json", login_options)
@@ -96,7 +100,7 @@ module Rubill
         headers: self.class.default_headers,
         query: {
           sessionId: id,
-          devKey: CREDENTIALS["dev_key"],
+          devKey: self.class.configuration.dev_key,
           data: data.to_json,
         },
       }
@@ -113,8 +117,39 @@ module Rubill
     def self._post(url, options)
       result = JSON.parse(post(url, options).body, symbolize_names: true)
 
-      raise result[:response_data][:error_message] unless result[:response_status] == 0
+      unless result[:response_status] == 0
+        raise APIError.new(result[:response_data][:error_message])
+      end
+
       result[:response_data]
+    end
+
+    def self.configure(&block)
+      self.configuration ||= Configuration.new
+      yield(configuration)
+    end
+
+    class Configuration
+      attr_accessor :user_name
+      attr_accessor :password
+      attr_accessor :dev_key
+      attr_accessor :org_id
+
+      def required_keys
+        %w(user_name password dev_key org_id)
+      end
+
+      def to_hash
+        required_keys.each_with_object({}) do |k, h|
+          h[k] = send(k.to_sym)
+        end
+      end
+
+      def missing_keys
+        required_keys.reject do |k|
+          to_hash[k]
+        end
+      end
     end
   end
 end

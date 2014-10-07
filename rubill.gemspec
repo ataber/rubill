@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
                    "lib/rubill/base.rb",
                    "lib/rubill/bill.rb",
                    "lib/rubill/invoice.rb",
-                   "lib/rubill/sent_pay.rb",
-                   "lib/rubill/received_pay.rb",
+                   "lib/rubill/sent_payment.rb",
+                   "lib/rubill/received_payment.rb",
                    "lib/rubill/customer.rb"]
   s.homepage    = 'http://rubygems.org/gems/rubill'
   s.license     = 'MIT'
