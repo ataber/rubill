@@ -53,7 +53,9 @@ module Rubill
     end
 
     def self.all
-      session.list(remote_class_name)
+      session.list(remote_class_name).map do |record|
+        new(record)
+      end
     end
 
     def self.session
