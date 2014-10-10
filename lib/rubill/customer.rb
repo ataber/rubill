@@ -9,7 +9,7 @@ module Rubill
       new(record)
     end
 
-    def self.contacts
+    def contacts
       CustomerContact.find_by_customer(self)
     end
 
