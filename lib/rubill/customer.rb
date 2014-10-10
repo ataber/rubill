@@ -9,6 +9,10 @@ module Rubill
       new(record)
     end
 
+    def self.contacts
+      CustomerContact.find_by_customer(self)
+    end
+
     def create_credit(amount, description="", syncReference="")
       data = {
         customerId: id,

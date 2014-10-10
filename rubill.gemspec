@@ -6,14 +6,17 @@ Gem::Specification.new do |s|
   s.description = "A Ruby interface to Bill.com's API"
   s.authors     = ["Andrew Taber"]
   s.email       = 'andrew.e.taber@gmail.com '
-  s.files       = ["lib/rubill.rb",
-                   "lib/rubill/session.rb",
-                   "lib/rubill/base.rb",
-                   "lib/rubill/bill.rb",
-                   "lib/rubill/invoice.rb",
-                   "lib/rubill/sent_payment.rb",
-                   "lib/rubill/received_payment.rb",
-                   "lib/rubill/customer.rb"]
+  s.files       = [
+                    "lib/rubill.rb",
+                    "lib/rubill/session.rb",
+                    "lib/rubill/base.rb",
+                    "lib/rubill/bill.rb",
+                    "lib/rubill/invoice.rb",
+                    "lib/rubill/sent_payment.rb",
+                    "lib/rubill/received_payment.rb",
+                    "lib/rubill/customer.rb",
+                    "lib/rubill/customer_contact.rb",
+                  ]
   s.homepage    = 'http://rubygems.org/gems/rubill'
   s.license     = 'MIT'
 
