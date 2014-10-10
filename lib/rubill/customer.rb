@@ -10,7 +10,7 @@ module Rubill
     end
 
     def contacts
-      CustomerContact.find_by_customer(self)
+      CustomerContact.find_by_customer(id)
     end
 
     def create_credit(amount, description="", syncReference="")
