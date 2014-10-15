@@ -4,6 +4,17 @@ module Rubill
       session.send_payment(opts)
     end
 
+    def self.active
+      all.select do |pay|
+        # Payment is not void
+        pay[:status] != "4"
+      end
+    end
+
+    def delete
+      self.class.delete(id)
+    end
+
     def self.delete(id)
       void(id)
     end
