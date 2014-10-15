@@ -12,7 +12,7 @@ module Rubill
       remote_record[:amountDue]
     end
 
-    def self.invoice_line_item(amount, description, item_id)
+    def self.line_item(amount, description, item_id)
       {
         entity: "InvoiceLineItem",
         quantity: 1,
