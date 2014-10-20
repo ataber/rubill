@@ -28,7 +28,7 @@ module Rubill
       remote_record[:id]
     end
 
-    def update
+    def save
       self.class.update(remote_record)
     end
 

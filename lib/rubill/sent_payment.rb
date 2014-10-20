@@ -11,11 +11,16 @@ module Rubill
       end
     end
 
+    def void
+      delete
+    end
+
     def delete
       self.class.delete(id)
     end
 
     def self.delete(id)
+      # Overwrite delete method in superclass
       void(id)
     end
 
