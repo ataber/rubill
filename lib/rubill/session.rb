@@ -110,8 +110,17 @@ module Rubill
       {"Content-Type" => "application/x-www-form-urlencoded"}
     end
 
-    def _post(url, options)
-      self.class._post(url, options)
+    def _post(url, options, retries=0)
+      begin
+        self.class._post(url, options)
+      rescue APIError => e
+        if e.message =~ /Session is invalid/ && retries < 3
+          login
+          _post(url, options, retries + 1)
+        else
+          raise
+        end
+      end
     end
 
     def self._post(url, options)

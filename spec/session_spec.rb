@@ -2,10 +2,12 @@ require "spec_helper"
 
 module Rubill
   describe Session do
+    subject { described_class.instance }
+
     describe "#initialize" do
       context "without a configuration" do
         it "should raise an error about missing keys" do
-          expect(-> { described_class.instance }).to raise_error(/Missing key/)
+          expect(-> { subject }).to raise_error(/Missing key/)
         end
       end
 
@@ -22,7 +24,7 @@ module Rubill
         end
 
         it "logs in" do
-          expect(described_class.instance.id).to eq("abc123")
+          expect(subject.id).to eq("abc123")
         end
       end
     end
@@ -37,6 +39,35 @@ module Rubill
         end
 
         expect(described_class.configuration.missing_keys).to be_empty
+      end
+    end
+
+    describe "#_post" do
+      context "when the class throws an error" do
+        it "reraises the error" do
+          expect(described_class).to receive(:_post) do
+            raise described_class::APIError.new("failed")
+          end
+
+          expect(-> { subject._post("url", {}) }).to raise_error(/failed/)
+        end
+
+        context "which is an invalid session error" do
+          it "logs in and tries again" do
+            counter = 0
+            expect(described_class).to receive(:_post).twice do
+              counter += 1
+              if counter <= 1
+                raise described_class::APIError.new("Session is invalid. Please log in.")
+              else
+                true
+              end
+            end
+
+            expect(subject).to receive(:login)
+            subject._post("url", {})
+          end
+        end
       end
     end
 
