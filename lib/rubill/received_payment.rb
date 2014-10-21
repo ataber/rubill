@@ -1,7 +1,7 @@
 module Rubill
   class ReceivedPayment < Base
     def self.create(opts)
-      session.receive_payment(opts)
+      Query.receive_payment(opts)
     end
 
     def self.active
@@ -24,7 +24,7 @@ module Rubill
     end
 
     def self.void(id)
-      session.void_received_payment(id)
+      Query.void_received_payment(id)
     end
 
     def self.remote_class_name

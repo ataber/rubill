@@ -1,7 +1,7 @@
 module Rubill
   class SentPayment < Base
     def self.create(opts)
-      session.send_payment(opts)
+      Query.send_payment(opts)
     end
 
     def self.active
@@ -25,7 +25,7 @@ module Rubill
     end
 
     def self.void(id)
-      session.void_sent_payment(id)
+      Query.void_sent_payment(id)
     end
 
     def self.remote_class_name
