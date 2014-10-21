@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.files       = [
                     "lib/rubill.rb",
                     "lib/rubill/session.rb",
+                    "lib/rubill/query.rb",
                     "lib/rubill/base.rb",
                     "lib/rubill/bill.rb",
                     "lib/rubill/invoice.rb",

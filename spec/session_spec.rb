@@ -13,7 +13,7 @@ module Rubill
 
       context "with a configuration" do
         before do
-          described_class.configure do |c|
+          Rubill.configure do |c|
             c.user_name = "test"
             c.password  = "pass"
             c.dev_key   = "dev_key"
@@ -31,7 +31,7 @@ module Rubill
 
     describe ".configure" do
       it "should set the necessary fields" do
-        described_class.configure do |c|
+        Rubill.configure do |c|
           c.user_name = "test"
           c.password  = "pass"
           c.dev_key   = "dev_key"

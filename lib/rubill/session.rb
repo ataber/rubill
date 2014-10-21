@@ -7,10 +7,6 @@ module Rubill
     include HTTParty
     include Singleton
 
-    class << self
-      attr_writer :configuration
-    end
-
     class APIError < StandardError; end
 
     base_uri "https://api.bill.com/api/v2"
@@ -26,55 +22,8 @@ module Rubill
       login
     end
 
-    def read(entity, id)
-      _post("/Crud/Read/#{entity}.json", options(id: id))
-    end
-
-    def create(entity, object={})
-      _post("/Crud/Create/#{entity}.json", options(obj: object))
-    end
-
-    def update(entity, object={})
-      _post("/Crud/Update/#{entity}.json", options(obj: object))
-    end
-
-    def delete(entity, id)
-      _post("/Crud/Delete/#{entity}.json", options(id: id))
-    end
-
-    def receive_payment(opts={})
-      _post("/RecordARPayment.json", options(opts))
-    end
-
-    def send_payment(opts={})
-      _post("/RecordAPPayment.json", options(opts))
-    end
-
-    def void_sent_payment(id)
-      _post("/VoidAPPayment.json", options(sentPayId: id))
-    end
-
-    def void_received_payment(id)
-      _post("/VoidARPayment.json", options(id: id))
-    end
-
-    def list(entity)
-      # Note: this method returns ALL of desired entity, including inactive
-      result = []
-      start = 0
-      step = 999
-      loop do
-        chunk = _post("/List/#{entity}.json", options(start: start, max: step))
-
-        if !chunk.empty?
-          result += chunk
-          start += step
-        else
-          break
-        end
-      end
-
-      result
+    def execute(query)
+      _post(query.url, query.options)
     end
 
     def login
@@ -133,35 +82,8 @@ module Rubill
       result[:response_data]
     end
 
-    def self.configure(&block)
-      yield(configuration)
-    end
-
     def self.configuration
-      @configuration ||= Configuration.new
-    end
-
-    class Configuration
-      attr_accessor :user_name
-      attr_accessor :password
-      attr_accessor :dev_key
-      attr_accessor :org_id
-
-      def required_keys
-        %w(user_name password dev_key org_id)
-      end
-
-      def to_hash
-        required_keys.each_with_object({}) do |k, h|
-          h[k] = send(k.to_sym)
-        end
-      end
-
-      def missing_keys
-        required_keys.reject do |k|
-          to_hash[k]
-        end
-      end
+      Rubill::configuration
     end
   end
 end
