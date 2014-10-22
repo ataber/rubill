@@ -17,13 +17,7 @@ module Rubill
     end
 
     def self.active
-      # There is also a way to list only active via the API but it's opaque
-      # and unlikely to be much faster than doing it in Ruby
-
-      # This should be overwritten in subclasses that don't have this field (i.e. payments)
-      all.select do |record|
-        record[:isActive] == "1"
-      end
+      where([Query::Filter.new("isActive", "=", "1")])
     end
 
     def id
@@ -54,24 +48,30 @@ module Rubill
       Query.delete(remote_class_name, id)
     end
 
-    def self.all
-      # Note: this method returns ALL of desired entity, including inactive
+    def self.where(filters=[])
+      raise ArgumentError unless filters.all? { |f| f.is_a?(Query::Filter) }
+
       result = []
       start = 0
       step = 999
       loop do
-        chunk = Query.list(remote_class_name, start, step)
+        chunk = Query.list(remote_class_name, start, step, filters)
 
         if !chunk.empty?
           records = chunk.map { |r| new(r) }
           result += records
           start += step
-        else
-          break
         end
+
+        break if chunk.length < step
       end
 
       result
+    end
+
+    def self.all
+      # Note: this method returns ALL of desired entity, including inactive
+      where([])
     end
 
     private

@@ -5,10 +5,7 @@ module Rubill
     end
 
     def self.active
-      all.select do |pay|
-        # Payment is not void
-        pay[:status] != "4"
-      end
+      where([Query::Filter.new("status", "!=", "4")])
     end
 
     def void
@@ -20,7 +17,7 @@ module Rubill
     end
 
     def self.delete(id)
-      # Overwrite delete method in superclass
+      # To overwrite delete method in superclass
       void(id)
     end
 

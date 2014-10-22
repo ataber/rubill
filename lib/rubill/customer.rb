@@ -1,12 +1,7 @@
 module Rubill
   class Customer < Base
     def self.find_by_name(name)
-      record = active.detect do |d|
-        d[:name] == name
-      end
-
-      raise NotFound unless record
-      new(record)
+      where([Query::Filter.new("name", "=", name)]).first
     end
 
     def contacts
