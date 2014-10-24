@@ -71,6 +71,15 @@ module Rubill
       end
     end
 
+    describe "#execute" do
+      let(:query) { Query.new("url", {"a" => "b"}) }
+
+      it "takes a Query object and posts using its data" do
+        expect(subject).to receive(:_post).with("url", subject.options({"a" => "b"}))
+        subject.execute(query)
+      end
+    end
+
     describe "._post" do
       context "when the API returns a nonzero status" do
         before do
