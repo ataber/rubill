@@ -23,7 +23,7 @@ module Rubill
     end
 
     def execute(query)
-      _post(query.url, query.options)
+      _post(query.url, options(query.options))
     end
 
     def login
