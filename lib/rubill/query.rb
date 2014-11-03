@@ -8,8 +8,13 @@ module Rubill
       self.options = opts
     end
 
-    def self.list(entity, start=0, step=999)
-      execute("/List/#{entity}.json", start: start, max: step)
+    def self.list(entity, start=0, step=999, filters=[])
+      execute(
+          "/List/#{entity}.json",
+          start: start,
+          max: step,
+          filters: filters.map(&:to_hash),
+       )
     end
 
     def self.read(entity, id)
@@ -50,6 +55,24 @@ module Rubill
 
     def self.execute(url, options)
       new(url, options).execute
+    end
+
+    class Filter
+      attr_accessor :field
+      attr_accessor :op
+      attr_accessor :value
+
+      def initialize(field, op, value)
+        self.field, self.op, self.value = field, op, value
+      end
+
+      def to_hash
+        {
+          field: field,
+          op: op,
+          value: value,
+        }
+      end
     end
   end
 end

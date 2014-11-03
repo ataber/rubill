@@ -24,5 +24,17 @@ module Rubill
         subject.execute
       end
     end
+
+    describe ".execute" do
+      let(:url) { "url" }
+      let(:options) { {"a" => "b"} }
+      let(:query) { double(execute: true) }
+
+      it "creates a new Query object and executes it" do
+        expect(described_class).to receive(:new).with(url, options) { query }
+        expect(query).to receive(:execute)
+        described_class.execute(url, options)
+      end
+    end
   end
 end
