@@ -43,6 +43,38 @@ module Rubill
     end
 
     describe "#_post" do
+      let(:url) { "url" }
+      let(:data) { {entity: "Bill", amount: 1.0} }
+
+      context "with non-empty options" do
+        before do
+          Rubill.configure do |c|
+            c.user_name = "test"
+            c.password  = "pass"
+            c.dev_key   = "dev_key"
+            c.org_id    = "org_id"
+          end
+
+          allow(described_class).to receive(:login) { "abc123" }
+        end
+
+        it "wraps the data with the proper session information" do
+          expect(described_class).to receive(:_post).with(
+            "url",
+            {
+              headers: described_class.default_headers,
+              query: {
+                sessionId: "abc123",
+                devKey: "dev_key",
+                data: data.to_json,
+              },
+            }
+          )
+
+          subject._post(url, data)
+        end
+      end
+
       context "when the class throws an error" do
         it "reraises the error" do
           expect(described_class).to receive(:_post) do
@@ -65,7 +97,7 @@ module Rubill
             end
 
             expect(subject).to receive(:login)
-            subject._post("url", {})
+            subject._post(url, data)
           end
         end
       end
@@ -75,7 +107,7 @@ module Rubill
       let(:query) { Query.new("url", {"a" => "b"}) }
 
       it "takes a Query object and posts using its data" do
-        expect(subject).to receive(:_post).with("url", subject.options({"a" => "b"}))
+        expect(subject).to receive(:_post).with("url", {"a" => "b"})
         subject.execute(query)
       end
     end

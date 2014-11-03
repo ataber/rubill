@@ -23,7 +23,7 @@ module Rubill
     end
 
     def execute(query)
-      _post(query.url, options(query.options))
+      _post(query.url, query.options)
     end
 
     def login
@@ -59,13 +59,13 @@ module Rubill
       {"Content-Type" => "application/x-www-form-urlencoded"}
     end
 
-    def _post(url, options, retries=0)
+    def _post(url, data, retries=0)
       begin
-        self.class._post(url, options)
+        self.class._post(url, options(data))
       rescue APIError => e
         if e.message =~ /Session is invalid/ && retries < 3
           login
-          _post(url, options, retries + 1)
+          _post(url, data, retries + 1)
         else
           raise
         end
