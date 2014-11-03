@@ -11,11 +11,9 @@ module Rubill
     def self.list(entity, start=0, step=999, filters=[])
       execute(
           "/List/#{entity}.json",
-          options(
-            start: start,
-            max: step,
-            filters: filters.map(&:to_hash),
-          ),
+          start: start,
+          max: step,
+          filters: filters.map(&:to_hash),
        )
     end
 
