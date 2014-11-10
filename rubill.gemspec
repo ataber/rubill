@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
                     "lib/rubill/invoice.rb",
                     "lib/rubill/sent_payment.rb",
                     "lib/rubill/received_payment.rb",
+                    "lib/rubill/vendor.rb",
                     "lib/rubill/customer.rb",
                     "lib/rubill/customer_contact.rb",
                   ]
