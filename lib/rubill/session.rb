@@ -9,7 +9,6 @@ module Rubill
     include HTTParty
     include Singleton
 
-
     base_uri "https://api.bill.com/api/v2"
 
     attr_accessor :id
