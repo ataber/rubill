@@ -45,6 +45,13 @@ module Rubill
     describe "#_post" do
       let(:url) { "url" }
       let(:data) { {entity: "Bill", amount: 1.0} }
+      let(:body) do
+        {
+          sessionId: "abc123",
+          devKey: "dev_key",
+          data: data.to_json,
+        }
+      end
 
       context "with non-empty options" do
         before do
@@ -59,17 +66,7 @@ module Rubill
         end
 
         it "wraps the data with the proper session information" do
-          expect(described_class).to receive(:_post).with(
-            "url",
-            {
-              headers: described_class.default_headers,
-              query: {
-                sessionId: "abc123",
-                devKey: "dev_key",
-                data: data.to_json,
-              },
-            }
-          )
+          expect(described_class).to receive(:_post).with(url, body)
 
           subject._post(url, data)
         end
@@ -113,12 +110,41 @@ module Rubill
     end
 
     describe "._post" do
+      context "with data" do
+        let(:url) { "url" }
+        let(:data) { {entity: "Bill", amount: 1.0} }
+        let(:body) do
+          {
+            sessionId: "abc123",
+            devKey: "dev_key",
+            data: data.to_json,
+          }
+        end
+
+        let(:response_json) do
+          {
+            response_status: 0,
+            response_data: { name: "abc" },
+          }.to_json
+        end
+
+        it "puts the data in the post body and parses with symbol keys" do
+          expect(described_class).to receive(:post).with(
+            url,
+            body: body,
+            headers: described_class.default_headers,
+          ) { double(body: response_json) }
+
+          expect(described_class._post(url, body)).to eq({name: "abc"})
+        end
+      end
+
       context "when the API returns a nonzero status" do
         before do
           expect(described_class).to receive(:post) do
             double(
               body: {
-                status: "1",
+                response_status: 1,
                 response_data: {
                   error_message: "houston"
                 }

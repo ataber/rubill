@@ -33,13 +33,10 @@ module Rubill
 
     def self.login
       login_options = {
-        headers: default_headers,
-        query: {
-          password: configuration.password,
-          userName: configuration.user_name,
-          devKey: configuration.dev_key,
-          orgId: configuration.org_id,
-        }
+        password: configuration.password,
+        userName: configuration.user_name,
+        devKey: configuration.dev_key,
+        orgId: configuration.org_id,
       }
       login = _post("/Login.json", login_options)
       login[:sessionId]
@@ -47,12 +44,9 @@ module Rubill
 
     def options(data={})
       {
-        headers: self.class.default_headers,
-        query: {
-          sessionId: id,
-          devKey: self.class.configuration.dev_key,
-          data: data.to_json,
-        },
+        sessionId: id,
+        devKey: self.class.configuration.dev_key,
+        data: data.to_json,
       }
     end
 
@@ -74,7 +68,8 @@ module Rubill
     end
 
     def self._post(url, options)
-      result = JSON.parse(post(url, options).body, symbolize_names: true)
+      body = post(url, body: options, headers: default_headers).body
+      result = JSON.parse(body, symbolize_names: true)
 
       unless result[:response_status] == 0
         raise APIError.new(result[:response_data][:error_message])
