@@ -3,11 +3,12 @@ require "json"
 require "singleton"
 
 module Rubill
+  class APIError < StandardError; end
+
   class Session
     include HTTParty
     include Singleton
 
-    class APIError < StandardError; end
 
     base_uri "https://api.bill.com/api/v2"
 

@@ -78,7 +78,7 @@ module Rubill
       context "when the class throws an error" do
         it "reraises the error" do
           expect(described_class).to receive(:_post) do
-            raise described_class::APIError.new("failed")
+            raise APIError.new("failed")
           end
 
           expect(-> { subject._post("url", {}) }).to raise_error(/failed/)
@@ -90,7 +90,7 @@ module Rubill
             expect(described_class).to receive(:_post).twice do
               counter += 1
               if counter <= 1
-                raise described_class::APIError.new("Session is invalid. Please log in.")
+                raise APIError.new("Session is invalid. Please log in.")
               else
                 true
               end
@@ -129,7 +129,7 @@ module Rubill
 
         it "throws an API error with the error message" do
           expect(-> { described_class._post("test", {}) }).to(
-            raise_error(described_class::APIError, /houston/)
+            raise_error(APIError, /houston/)
           )
         end
       end
