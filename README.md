@@ -24,7 +24,7 @@ end
 
 Usage:
 
-Rubill exposes three entities directly: Customer, Bill, and Invoice.
+Rubill exposes the following entities directly: Customer, Customer Contact, Bill, ReceivedPayment, SentPayment, Vendor, and Invoice.
 
 For each you can sync a hash-like record with Bill.com by calling for example
 
@@ -32,4 +32,4 @@ For each you can sync a hash-like record with Bill.com by calling for example
 Rubill::Customer.create(attrs)
 ```
 
-The resulting return value will be a Customer object, which you can update by modifying via hash assignment and then calling `update`
+The resulting return value will be a Rubill::Customer object, which you can update by modifying via hash assignment and then calling `save`. Note that this flow does not work for ReceivedPayments or SentPayments, as you will need to void and then recreate these records.
