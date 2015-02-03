@@ -5,7 +5,7 @@ module Rubill
     end
 
     def contacts
-      CustomerContact.find_by_customer(id)
+      CustomerContact.active_by_customer(id)
     end
 
     def self.remote_class_name
