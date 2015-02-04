@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ataber/rubill.svg?branch=master)](https://travis-ci.org/ataber/rubill)
+[![Code Climate](https://codeclimate.com/github/ataber/rubill/badges/gpa.svg)](https://codeclimate.com/github/ataber/rubill)
 
 rubill
 ======
