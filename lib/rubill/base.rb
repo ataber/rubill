@@ -48,12 +48,13 @@ module Rubill
       Query.delete(remote_class_name, id)
     end
 
-    def self.where(filters=[], hash_filters={})
-      filters, hash_filters = [], filters if filters.is_a?(Hash)
-      raise ArgumentError unless filters.all? { |f| f.is_a?(Query::Filter) }
+    def self.where(filters=[])
+      raise ArgumentError unless filters.is_a?(Hash) || filters.all? { |f| f.is_a?(Query::Filter) }
 
-      hash_filters.each do |field, value|
-        filters << Query::Filter.new(field.to_s, "=", value)
+      if filters.is_a?(Hash)
+        filters = filters.map do |field, value|
+          Query::Filter.new(field.to_s, "=", value)
+        end
       end
 
       result = []
