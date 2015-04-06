@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubill (0.1.1)
+    rubill (0.1.2)
       httparty
       json
 
