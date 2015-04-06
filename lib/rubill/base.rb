@@ -49,7 +49,14 @@ module Rubill
     end
 
     def self.where(filters=[])
-      raise ArgumentError unless filters.all? { |f| f.is_a?(Query::Filter) }
+      raise ArgumentError unless filters.is_a?(Enumerable)
+      raise ArgumentError if !filters.is_a?(Hash) && !filters.all? { |f| f.is_a?(Query::Filter) }
+
+      if filters.is_a?(Hash)
+        filters = filters.map do |field, value|
+          Query::Filter.new(field.to_s, "=", value)
+        end
+      end
 
       result = []
       start = 0
