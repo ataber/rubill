@@ -24,6 +24,19 @@ module Rubill
           ) { [] }
           described_class.where([filter])
         end
+
+        it "creates simple equality filters when passed a hash" do
+          filters = nil
+          expect(Query).to receive(:list) { |_, _, _, fs| filters = fs }
+          described_class.where(id: 3, status: "5")
+
+          expect(filters.count).to eq(2)
+
+          id_filter = filters.first
+          expect(id_filter.field).to eq("id")
+          expect(id_filter.op).to eq("=")
+          expect(id_filter.value).to eq(3)
+        end
       end
 
       context "when given a list of things that aren't filters" do
