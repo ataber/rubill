@@ -67,8 +67,22 @@ module Rubill
     end
 
     def self._post(url, options)
-      body = post(url, body: options, headers: default_headers).body
-      result = JSON.parse(body, symbolize_names: true)
+      target_environment = if self.configuration.sandbox
+        "https://api-stage.bill.com/api/v2"
+      else
+        "https://api.bill.com/api/v2"
+      end
+
+      self.base_uri target_environment
+
+      response = post(
+        url,
+        body: options,
+        headers: default_headers,
+        debug_output: self.configuration.debug ? $stdout : nil
+      )
+
+      result = JSON.parse(response.body, symbolize_names: true)
 
       unless result[:response_status] == 0
         raise APIError.new(result[:response_data][:error_message])
