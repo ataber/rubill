@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://rubygems.org/gems/rubill'
   s.license     = 'MIT'
 
-  s.add_dependency "httparty"
+  s.add_dependency "httmultiparty"
   s.add_dependency "json"
 
   s.add_development_dependency "rspec"

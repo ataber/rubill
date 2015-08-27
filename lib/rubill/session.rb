@@ -1,4 +1,4 @@
-require "httparty"
+require "httmultiparty"
 require "json"
 require "singleton"
 
@@ -67,8 +67,19 @@ module Rubill
     end
 
     def self._post(url, options)
-      body = post(url, body: options, headers: default_headers).body
-      result = JSON.parse(body, symbolize_names: true)
+      if options.key?(:fileName)
+        file = StringIO.new(options.delete(:content))
+      end
+
+      post_options = {
+        body: options,
+        headers: default_headers,
+      }
+
+      post_options[:file] = file if file
+
+      response = post(url, post_options)
+      result = JSON.parse(response.body, symbolize_names: true)
 
       unless result[:response_status] == 0
         raise APIError.new(result[:response_data][:error_message])
