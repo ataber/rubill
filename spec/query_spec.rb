@@ -2,9 +2,10 @@ require "spec_helper"
 
 module Rubill
   describe Query do
+    let(:options) { {"a" => "b"} }
+
     describe ".execute" do
       let(:url) { "url" }
-      let(:options) { {"a" => "b"} }
 
       it "instantiates a new query and executes it" do
         instance = double(execute: true)
@@ -27,13 +28,23 @@ module Rubill
 
     describe ".execute" do
       let(:url) { "url" }
-      let(:options) { {"a" => "b"} }
       let(:query) { double(execute: true) }
 
       it "creates a new Query object and executes it" do
         expect(described_class).to receive(:new).with(url, options) { query }
         expect(query).to receive(:execute)
         described_class.execute(url, options)
+      end
+    end
+
+    describe ".pay_bills" do
+      let(:url) { "/PayBills.json" }
+      let(:query) { double(execute: true) }
+
+      it "creates a new Query object and executes it" do
+        expect(described_class).to receive(:new).with(url, options) { query }
+        expect(query).to receive(:execute)
+        described_class.pay_bills(options)
       end
     end
   end
