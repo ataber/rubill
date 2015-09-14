@@ -9,14 +9,18 @@ module Rubill
     include HTTParty
     include Singleton
 
-    base_uri "https://api.bill.com/api/v2"
-
     attr_accessor :id
+
+    base_uri "https://api.bill.com/api/v2"
 
     def initialize
       config = self.class.configuration
       if missing = (!config.missing_keys.empty? && config.missing_keys)
         raise "Missing key(s) in configuration: #{missing}"
+      end
+
+      if config.sandbox
+        self.class.base_uri "https://api-stage.bill.com/api/v2"
       end
 
       login
@@ -67,8 +71,17 @@ module Rubill
     end
 
     def self._post(url, options)
-      body = post(url, body: options, headers: default_headers).body
-      result = JSON.parse(body, symbolize_names: true)
+      post_options = {
+        body: options,
+        headers: default_headers
+      }
+
+      if self.configuration.debug
+        post_options[:debug_output] = $stdout
+      end
+
+      response = post(url, post_options)
+      result = JSON.parse(response.body, symbolize_names: true)
 
       unless result[:response_status] == 0
         raise APIError.new(result[:response_data][:error_message])

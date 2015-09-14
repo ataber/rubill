@@ -14,6 +14,8 @@ module Rubill
     attr_accessor :password
     attr_accessor :dev_key
     attr_accessor :org_id
+    attr_writer :debug
+    attr_writer :sandbox
 
     def required_keys
       %w(user_name password dev_key org_id)
@@ -29,6 +31,14 @@ module Rubill
       required_keys.reject do |k|
         to_hash[k]
       end
+    end
+
+    def debug
+      @debug || false
+    end
+
+    def sandbox
+      @sandbox || false
     end
   end
 end
