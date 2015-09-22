@@ -20,11 +20,33 @@ module Rubill
             c.org_id    = "org_id"
           end
 
+          expect(described_class.base_uri).to eq("https://api.bill.com/api/v2")
           expect(described_class).to receive(:login) { "abc123" }
         end
 
         it "logs in" do
           expect(subject.id).to eq("abc123")
+        end
+      end
+
+      context "with a sandbox configuration" do
+        subject { described_class.clone.instance }
+
+        before do
+          Rubill.configure do |c|
+            c.user_name = "test"
+            c.password  = "pass"
+            c.dev_key   = "dev_key"
+            c.org_id    = "org_id"
+            c.sandbox   = true
+          end
+
+          expect(described_class).to receive(:login) { "abc123" }
+        end
+
+        it "logs in" do
+          expect(subject.id).to eq("abc123")
+          expect(subject.class.base_uri).to eq("https://api-stage.bill.com/api/v2")
         end
       end
     end
@@ -136,6 +158,32 @@ module Rubill
           ) { double(body: response_json) }
 
           expect(described_class._post(url, body)).to eq({name: "abc"})
+        end
+
+        context "with debug option" do
+          subject { described_class.clone.instance }
+          let(:response_json) do
+            {
+              response_status: 0,
+              response_data: { name: "abc", debug_output: '' },
+            }.to_json
+          end
+
+          before do
+            Rubill.configure do |c|
+              c.user_name = "test"
+              c.password  = "pass"
+              c.dev_key   = "dev_key"
+              c.org_id    = "org_id"
+              c.debug     = true
+            end
+          end
+
+          it "response with debug output" do
+            expect(described_class).to receive(:post) { double(body: response_json) }
+
+            expect(described_class._post(url, body)).to include(:debug_output)
+          end
         end
       end
 
