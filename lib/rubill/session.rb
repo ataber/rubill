@@ -1,4 +1,4 @@
-require "httparty"
+require "httmultiparty"
 require "json"
 require "singleton"
 
@@ -71,10 +71,16 @@ module Rubill
     end
 
     def self._post(url, options)
+      if options.key?(:fileName)
+        file = StringIO.new(options.delete(:content))
+      end
+
       post_options = {
         body: options,
-        headers: default_headers
+        headers: default_headers,
       }
+
+      post_options[:file] = file if file
 
       if self.configuration.debug
         post_options[:debug_output] = $stdout

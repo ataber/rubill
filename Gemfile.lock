@@ -2,18 +2,24 @@ PATH
   remote: .
   specs:
     rubill (0.1.2)
-      httparty
+      httmultiparty
       json
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
-    httparty (0.13.3)
+    httmultiparty (0.3.16)
+      httparty (>= 0.7.3)
+      mimemagic
+      multipart-post
+    httparty (0.13.5)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    json (1.8.2)
+    json (1.8.3)
+    mimemagic (0.3.0)
     multi_xml (0.5.5)
+    multipart-post (2.0.0)
     rake (10.3.1)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
