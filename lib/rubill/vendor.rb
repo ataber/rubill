@@ -10,5 +10,9 @@ module Rubill
         Query::Filter.new("vendorId", "=", id),
       ])
     end
+
+    def send_invite(email)
+      Query.send_vendor_invite(id, email)
+    end
   end
 end

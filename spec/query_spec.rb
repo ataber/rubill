@@ -58,5 +58,19 @@ module Rubill
         described_class.pay_bills(options)
       end
     end
+
+    describe ".send_vendor_invite" do
+      let(:url) { "/SendVendorInvite.json" }
+      let(:query) { double(execute: true) }
+      let(:vendor_id) { '1234' }
+      let(:email) { 'test@email.com' }
+      let(:options) { Hash[vendorId: '1234', email: 'test@email.com'] }
+
+      it "creates a new Query object and executes it" do
+        expect(described_class).to receive(:new).with(url, options) { query }
+        expect(query).to receive(:execute)
+        described_class.send_vendor_invite(vendor_id, email)
+      end
+    end
   end
 end
