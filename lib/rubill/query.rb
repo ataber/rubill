@@ -57,6 +57,10 @@ module Rubill
       execute("/VoidARPayment.json", id: id)
     end
 
+    def self.send_vendor_invite(vendorId, email)
+      execute("/SendVendorInvite.json", vendorId: vendorId, email: email)
+    end
+
     def execute
       Session.instance.execute(self)
     end
