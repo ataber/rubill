@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubill (0.1.2)
+    rubill (0.1.3)
       httmultiparty
       json
 
