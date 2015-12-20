@@ -56,3 +56,5 @@ require "rubill/received_payment"
 require "rubill/vendor"
 require "rubill/customer"
 require "rubill/customer_contact"
+require "rubill/attachment"
+

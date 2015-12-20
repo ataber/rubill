@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rubill'
-  s.version     = '0.1.5'
+  s.version     = '0.1.6'
   s.date        = '2014-09-31'
   s.summary     = "Interface with Bill.com"
   s.description = "A Ruby interface to Bill.com's API"
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
                     "lib/rubill/vendor.rb",
                     "lib/rubill/customer.rb",
                     "lib/rubill/customer_contact.rb",
+                    "lib/rubill/attachment.rb",
                   ]
   s.homepage    = 'http://rubygems.org/gems/rubill'
   s.license     = 'MIT'
