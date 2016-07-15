@@ -61,6 +61,14 @@ module Rubill
       execute("/SendVendorInvite.json", vendorId: vendorId, email: email)
     end
 
+    def self.get_disbursement_data(id)
+      execute("/GetDisbursementData.json", sentPayId: id)
+    end
+
+    def self.get_check_image_data(id)
+      execute("/GetCheckImageData.json", sentPayId: id)
+    end
+
     def execute
       Session.instance.execute(self)
     end
