@@ -20,8 +20,8 @@ module Rubill
             c.org_id    = "org_id"
           end
 
-          expect(described_class.base_uri).to eq("https://api.bill.com/api/v2")
-          expect(described_class).to receive(:login) { "abc123" }
+          expect(described_class).to \
+            receive(:login).with('https://api.bill.com/api/v2') { "abc123" }
         end
 
         it "logs in" do
@@ -41,12 +41,12 @@ module Rubill
             c.sandbox   = true
           end
 
-          expect(described_class).to receive(:login) { "abc123" }
+          expect(described_class).to \
+            receive(:login).with('https://api-stage.bill.com/api/v2') { "abc123" }
         end
 
         it "logs in" do
           expect(subject.id).to eq("abc123")
-          expect(subject.class.base_uri).to eq("https://api-stage.bill.com/api/v2")
         end
       end
     end
@@ -65,7 +65,7 @@ module Rubill
     end
 
     describe "#_post" do
-      let(:url) { "url" }
+      let(:url) { "/url" }
       let(:data) { {entity: "Bill", amount: 1.0} }
       let(:body) do
         {
@@ -88,7 +88,7 @@ module Rubill
         end
 
         it "wraps the data with the proper session information" do
-          expect(described_class).to receive(:_post).with(url, body)
+          expect(described_class).to receive(:_post).with("https://api.bill.com/api/v2" + url, body, nil)
 
           subject._post(url, data)
         end
@@ -133,7 +133,7 @@ module Rubill
 
     describe "._post" do
       context "with data" do
-        let(:url) { "url" }
+        let(:url) { "http://example.com/url" }
         let(:data) { {entity: "Bill", amount: 1.0} }
         let(:body) do
           {
@@ -151,10 +151,9 @@ module Rubill
         end
 
         it "puts the data in the post body and parses with symbol keys" do
-          expect(described_class).to receive(:post).with(
+          expect(RestClient).to receive(:post).with(
             url,
-            body: body,
-            headers: described_class.default_headers,
+            body
           ) { double(body: response_json) }
 
           expect(described_class._post(url, body)).to eq({name: "abc"})
@@ -180,7 +179,7 @@ module Rubill
           end
 
           it "response with debug output" do
-            expect(described_class).to receive(:post) { double(body: response_json) }
+            expect(RestClient).to receive(:post) { double(body: response_json) }
 
             expect(described_class._post(url, body)).to include(:debug_output)
           end
@@ -189,7 +188,7 @@ module Rubill
 
       context "when the API returns a nonzero status" do
         before do
-          expect(described_class).to receive(:post) do
+          expect(RestClient).to receive(:post) do
             double(
               body: {
                 response_status: 1,
