@@ -25,7 +25,7 @@ end
 
 Usage:
 
-Rubill exposes the following entities directly: Customer, Customer Contact, Bill, ReceivedPayment, SentPayment, Vendor, and Invoice.
+Rubill exposes the following entities directly: Customer, Customer Contact, Bill, Chart of Account, ReceivedPayment, SentPayment, Vendor, and Invoice.
 
 For each you can sync a hash-like record with Bill.com by calling for example
 
