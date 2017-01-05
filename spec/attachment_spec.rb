@@ -13,7 +13,7 @@ module Rubill
           expect(Query).to receive(:upload_attachment).with({
             id: id,
             fileName: file_name,
-            content: 'Test text'
+            document: 'Test text'
           })
         end
 
