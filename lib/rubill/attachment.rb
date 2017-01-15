@@ -6,6 +6,7 @@ module Rubill
       Query.upload_attachment({
         id: object_id,
         fileName: file_name,
+        document: content,
         content: content
       })
     end
