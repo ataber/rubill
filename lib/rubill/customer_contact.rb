@@ -12,9 +12,5 @@ module Rubill
         ]
       )
     end
-
-    def self.remote_class_name
-      "CustomerContact"
-    end
   end
 end

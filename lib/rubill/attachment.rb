@@ -10,9 +10,5 @@ module Rubill
         content: content
       })
     end
-
-    def self.remote_class_name
-      "Attachment"
-    end
   end
 end

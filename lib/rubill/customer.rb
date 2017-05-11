@@ -7,9 +7,5 @@ module Rubill
     def contacts
       CustomerContact.active_by_customer(id)
     end
-
-    def self.remote_class_name
-      "Customer"
-    end
   end
 end
