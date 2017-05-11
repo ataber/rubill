@@ -3,9 +3,5 @@ module Rubill
     def self.pay_bills(opts)
       SentBillPayment.create(opts)
     end
-
-    def self.remote_class_name
-      "BillPayment"
-    end
   end
 end

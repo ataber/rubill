@@ -38,9 +38,5 @@ module Rubill
         description: description,
       }
     end
-
-    def self.remote_class_name
-      "Invoice"
-    end
   end
 end

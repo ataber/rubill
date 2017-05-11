@@ -84,7 +84,8 @@ module Rubill
     private
 
     def self.remote_class_name
-      raise NotImplementedError
+      # Assume remote class name is the same as the class name
+      self.name.sub('Rubill::', '')
     end
   end
 end
