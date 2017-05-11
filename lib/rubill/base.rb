@@ -49,7 +49,9 @@ module Rubill
     end
 
     def self.find_by_name(name)
-      Query.list(remote_class_name, 0, 1, [Query::Filter.new("name", "=", name)]).first
+      raw_result = Query.list(remote_class_name, 0, 1, [Query::Filter.new("name", "=", name)])
+
+      new(raw_result.first)
     end
 
     def self.where(filters=[])
