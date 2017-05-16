@@ -48,6 +48,12 @@ module Rubill
       Query.delete(remote_class_name, id)
     end
 
+    def self.find_by_name(name)
+      raw_result = Query.list(remote_class_name, 0, 1, [Query::Filter.new("name", "=", name)])
+
+      new(raw_result.first)
+    end
+
     def self.where(filters=[])
       raise ArgumentError unless filters.is_a?(Enumerable)
       raise ArgumentError if !filters.is_a?(Hash) && !filters.all? { |f| f.is_a?(Query::Filter) }
