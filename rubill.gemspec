@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
                     "lib/rubill/entities/attachment.rb",
                     "lib/rubill/entities/location.rb",
                     "lib/rubill/entities/actg_class.rb",
+                    "lib/rubill/entities/item.rb",
                   ]
   s.homepage    = 'http://rubygems.org/gems/rubill'
   s.license     = 'MIT'
