@@ -5,4 +5,3 @@ require "rubill"
 
 RSpec.configure do |c|
 end
-

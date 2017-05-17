@@ -43,20 +43,8 @@ module Rubill
   end
 end
 
-require "rubill/session"
-require "rubill/query"
 require "rubill/base"
-require "rubill/bill"
-require "rubill/bill_payment"
-require "rubill/chart_of_account"
-require "rubill/invoice"
-require "rubill/attachment"
-require "rubill/sent_payment"
-require "rubill/sent_bill_payment"
-require "rubill/received_payment"
-require "rubill/vendor"
-require "rubill/customer"
-require "rubill/customer_contact"
-require "rubill/attachment"
-require "rubill/get_disbursement_data"
-require "rubill/get_check_image_data"
+require "rubill/query"
+require "rubill/session"
+
+Dir["#{File.dirname(__FILE__)}/rubill/entities/*.rb"].each { |f| require f }
