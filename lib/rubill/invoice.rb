@@ -28,6 +28,22 @@ module Rubill
       remote_record[:amountDue]
     end
 
+    def send_email(subject, body, contact_emails)
+      Query.execute(
+        "/SendInvoice.json",
+        {
+          invoiceId: id,
+          headers: {
+            subject: subject,
+            toEmailAddresses: contact_emails
+          },
+          content: {
+            body: body
+          }
+        }
+      )
+    end
+
     def self.line_item(amount, description, item_id)
       {
         entity: "InvoiceLineItem",
