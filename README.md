@@ -32,6 +32,7 @@ Rubill exposes the following entities directly:
 * GetCheckImageData
 * GetDisbursementData
 * Invoice
+* Item
 * Location
 * ReceivedPayment
 * SentBillPayment
