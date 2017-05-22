@@ -47,6 +47,33 @@ module Rubill
       end
     end
 
+    describe ".find_by_name" do
+      let(:filter_double) { double(Query::Filter) }
+
+      before(:each) do
+        allow(Query::Filter).to receive(:new).with("name", "=", anything).
+          and_return(filter_double)
+      end
+
+      it "finds an entity by name" do
+        result_double = double(Hash)
+
+        allow(Query).to receive(:list).with("Base", 0, 1, [ filter_double ]).
+          and_return([ result_double ])
+
+        expect(described_class).to receive(:new).with(result_double)
+
+        described_class.find_by_name("Name")
+      end
+
+      it "returns nil if entity not found" do
+        allow(Query).to receive(:list).with("Base", 0, 1, [ filter_double ]).
+          and_return([])
+
+        expect(described_class.find_by_name("Name")).to be_nil
+      end
+    end
+
     describe "#[]" do
       let(:remote) { {id: "123"} }
       subject { described_class.new(remote) }

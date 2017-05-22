@@ -1,3 +1,3 @@
 module Rubill
-  class Location; end
+  class Location < Base; end
 end
