@@ -1,3 +1,3 @@
 module Rubill
-  class ActgClass; end
+  class ActgClass < Base; end
 end

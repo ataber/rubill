@@ -2,6 +2,8 @@ require "spec_helper"
 
 module Rubill
   describe Attachment do
+    it { expect(described_class).to be < Rubill::Base }
+
     let(:options) { { "a" => "b" } }
 
     describe ".send_attachment" do
