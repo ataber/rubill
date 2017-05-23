@@ -9,12 +9,20 @@ Bill.com's developer documentation: https://developer.bill.com/hc/en-us/categori
 
 ## Setup:
 
-```
+```ruby
 Rubill.configure do |config|
+  # REQUIRED CONFIGURATION
   config.user_name = "USERNAME@EMAIL.COM"
   config.password = "XXXX"
   config.dev_key = "XXXX"
   config.org_id = "XXXX"
+  
+  # OPTIONAL CONFIGURATION
+  # Point base_uri to app-stage.bill.com instead of app.bill.com, default `false`
+  # config.sandbox = true
+  #
+  # Print debugging information to $stdout, default `false`
+  # config.debug = true
 end
 ```
 
@@ -41,7 +49,7 @@ Rubill exposes the following entities directly:
 
 For each you can sync a hash-like record with Bill.com by calling for example
 
-```
+```ruby
 Rubill::Customer.create(attrs)
 ```
 
