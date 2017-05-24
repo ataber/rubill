@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubill (0.1.7)
+    rubill (0.1.8)
       json
       rest-client
 
