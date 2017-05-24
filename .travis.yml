@@ -1,5 +1,13 @@
 language: ruby
 rvm:
-  - 2.1.2
+- 2.1.2
 notifications:
   email: false
+deploy:
+  provider: rubygems
+  api_key:
+    secure: g5HsITL8OzKfe8+s1Xm5vL6U4IBb9czwCOcM2Hyexb7MHdonYEQibL1gDEc0tcpr02eyt47jro/PDN1tQsc9RXn/GTu+XrZqaFfTYvb8IdEIK6Kr6/+QFDuNLskeLKeSk0v+1T90WRT+VMMfdTUxIGUvncxS4NpUcqFW4MSu5RM=
+  gem: rubill
+  on:
+    tags: true
+    repo: ataber/rubill
