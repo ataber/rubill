@@ -27,5 +27,31 @@ module Rubill
         expect(described_class.find_by_email("unknown_email")).to be_nil
       end
     end
+
+    describe "::find_by_account_number" do
+      let(:active_customer) do
+        customer = double(described_class)
+
+        allow(customer).to receive(:[]).with(:accNumber).and_return("c_acc_num")
+
+        customer
+      end
+
+      before(:each) do
+        allow(described_class).to receive(:active).and_return([
+          active_customer
+        ])
+      end
+
+      it "finds a customer by account number" do
+        expect(described_class.find_by_account_number("c_acc_num")).
+          to eq(active_customer)
+      end
+
+      it "nil if customer does not exist or is inactive" do
+        expect(described_class.find_by_account_number("unknown_acc_num")).
+          to be_nil
+      end
+    end
   end
 end
