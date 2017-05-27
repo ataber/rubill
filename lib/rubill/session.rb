@@ -3,7 +3,6 @@ require "json"
 require "singleton"
 require "tempfile"
 
-
 module Rubill
   class APIError < StandardError; end
 
@@ -53,7 +52,7 @@ module Rubill
         sessionId: id,
         devKey: self.class.configuration.dev_key,
         data: data.to_json,
-      }.merge(top_level_data.to_h)
+      }.merge(top_level_data || {})
     end
 
     def _post(url, data, retries=0)
