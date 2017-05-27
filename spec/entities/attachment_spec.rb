@@ -9,19 +9,25 @@ module Rubill
     describe ".send_attachment" do
       let(:id) { "123" }
       let(:file_name) { "file.txt" }
+      let(:content) { "Test text" }
+      let(:file) { double(Tempfile, rewind: true, close: true, unlink: true) }
 
       context "with plain text" do
-        before do
-          expect(Query).to receive(:upload_attachment).with({
+        it "should be uploaded" do
+          allow(Tempfile).to receive(:new).and_return(file)
+          expect(file).to receive(:write).with(content)
+
+          expect(Query).to receive(:execute).with("/UploadAttachment.json", {
             id: id,
             fileName: file_name,
             document: 'Test text',
-            content: 'Test text'
+            '_top_level_data' => {
+              file: file,
+              multipart: true
+            }
           })
-        end
 
-        it "should be uploaded" do
-          described_class.send_attachment(id, file_name, 'Test text')
+          described_class.send_attachment(id, file_name, content)
         end
       end
     end

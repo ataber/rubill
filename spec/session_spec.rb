@@ -88,7 +88,8 @@ module Rubill
         end
 
         it "wraps the data with the proper session information" do
-          expect(described_class).to receive(:_post).with("https://api.bill.com/api/v2" + url, body, nil)
+          expect(described_class).to receive(:_post).
+            with("https://api.bill.com/api/v2" + url, body)
 
           subject._post(url, data)
         end

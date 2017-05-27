@@ -37,17 +37,6 @@ module Rubill
       end
     end
 
-    describe ".upload_attachment" do
-      let(:url) { "/UploadAttachment.json" }
-      let(:query) { double(execute: true) }
-
-      it "creates a new Query object and executes it" do
-        expect(described_class).to receive(:new).with(url, options) { query }
-        expect(query).to receive(:execute)
-        described_class.upload_attachment(options)
-      end
-    end
-
     describe ".pay_bills" do
       let(:url) { "/PayBills.json" }
       let(:query) { double(execute: true) }
