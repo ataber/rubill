@@ -45,10 +45,6 @@ module Rubill
       execute("/RecordAPPayment.json", opts)
     end
 
-    def self.upload_attachment(opts={})
-      execute("/UploadAttachment.json", opts)
-    end
-
     def self.void_sent_payment(id)
       execute("/VoidAPPayment.json", sentPayId: id)
     end

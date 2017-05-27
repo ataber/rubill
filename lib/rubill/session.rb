@@ -47,31 +47,18 @@ module Rubill
     end
 
     def options(data={})
-      data = data.dup
-      data.delete(:content)
+      top_level_data = data.delete("_top_level_data")
+
       {
         sessionId: id,
         devKey: self.class.configuration.dev_key,
         data: data.to_json,
-      }
-    end
-
-    def file_from_data(data = {})
-      if data && data.is_a?(Hash) && data.key?(:fileName)
-        file = Tempfile.new(data[:fileName])
-        file.write data[:content]
-        file.rewind
-      end
-
-      file
+      }.merge(top_level_data.to_h)
     end
 
     def _post(url, data, retries=0)
       begin
-        file = file_from_data(data)
-        response_data = self.class._post(self.base_uri + url, options(data), file)
-        file.close if file
-        response_data
+        self.class._post(self.base_uri + url, options(data))
       rescue APIError => e
         if e.message =~ /Session is invalid/ && retries < 3
           login
@@ -82,19 +69,12 @@ module Rubill
       end
     end
 
-    def self._post(url, options, file = nil)
-      post_options = options
-
-      if file
-        post_options[:file] = file
-        post_options[:multipart] = true
-      end
-
+    def self._post(url, options)
       if self.configuration.debug
-        post_options[:debug_output] = $stdout
+        options[:debug_output] = $stdout
       end
 
-      response = RestClient.post(url, post_options)
+      response = RestClient.post(url, options)
       result = JSON.parse(response.body, symbolize_names: true)
 
       unless result[:response_status] == 0
