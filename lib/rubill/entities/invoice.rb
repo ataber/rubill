@@ -8,20 +8,8 @@ module Rubill
       remote_record[:amount]
     end
 
-    def send_email(subject, body, contact_emails)
-      Query.execute(
-        "/SendInvoice.json",
-        {
-          invoiceId: id,
-          headers: {
-            subject: subject,
-            toEmailAddresses: contact_emails
-          },
-          content: {
-            body: body
-          }
-        }
-      )
+    def send_email(options)
+      Query.execute("/SendInvoice.json", { invoiceId: id }.merge(options))
     end
 
     def amount_due

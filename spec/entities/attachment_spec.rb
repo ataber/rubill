@@ -4,8 +4,6 @@ module Rubill
   describe Attachment do
     it { expect(described_class).to be < Rubill::Base }
 
-    let(:options) { { "a" => "b" } }
-
     describe ".send_attachment" do
       let(:id) { "123" }
       let(:file_name) { "file.txt" }
