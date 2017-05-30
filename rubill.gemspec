@@ -12,8 +12,8 @@ Gem::Specification.new do |spec|
   spec.files          = Dir['lib/*.rb']
   spec.require_paths  = ["lib"]
 
-  spec.add_runtime_dependency "rest-client", "~> 2.0"
-  spec.add_runtime_dependency "json", "~> 2.0"
+  spec.add_runtime_dependency "rest-client", '~> 0'
+  spec.add_runtime_dependency "json", '~> 0'
 
   spec.add_development_dependency "rspec", "~> 3.1"
   spec.add_development_dependency "rake", "~> 10.3"
