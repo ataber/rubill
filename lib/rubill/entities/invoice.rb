@@ -20,13 +20,10 @@ module Rubill
     #   * ccMe
     #   * subject
     #
-    # Possible content keys:
-    #   * body
-    #
-    # Will use settings/content from the Default Email Template if
-    # nothing specified
-    def send_email(headers = {}, content = {})
-      options = { headers: headers, content: content }
+    # Will use headers and body from the Default Email Template if
+    # not otherwise specified
+    def send_email(headers = {}, body = nil)
+      options = { headers: headers, content: body ? { body: body } : {}}
 
       Query.execute("/SendInvoice.json", { invoiceId: id }.merge(options))
     end
