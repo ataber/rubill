@@ -1,3 +1,8 @@
+require "rest-client"
+require "json"
+require "singleton"
+require "tempfile"
+
 module Rubill
   attr_writer :configuration
 

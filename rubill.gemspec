@@ -9,11 +9,12 @@ Gem::Specification.new do |spec|
   spec.homepage    = 'http://rubygems.org/gems/rubill'
   spec.license     = 'MIT'
 
-  spec.files          = Dir['lib/*.rb']
+  spec.files = Dir['lib/**/*.rb']
+
   spec.require_paths  = ["lib"]
 
-  spec.add_runtime_dependency "rest-client", '~> 0'
-  spec.add_runtime_dependency "json", '~> 0'
+  spec.add_runtime_dependency "rest-client"
+  spec.add_runtime_dependency "json"
 
   spec.add_development_dependency "rspec", "~> 3.1"
   spec.add_development_dependency "rake", "~> 10.3"

@@ -1,8 +1,3 @@
-require "rest-client"
-require "json"
-require "singleton"
-require "tempfile"
-
 module Rubill
   class APIError < StandardError; end
 

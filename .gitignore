@@ -1,4 +1,6 @@
 .env
+Gemfile.lock
+/rubill-*.gem
 
 test.rb
 
