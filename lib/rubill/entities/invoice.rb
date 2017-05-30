@@ -8,7 +8,26 @@ module Rubill
       remote_record[:amount]
     end
 
-    def send_email(options)
+    ##
+    # Send email about invoice to customer
+    #
+    # Bill.com Documentation:
+    # https://developer.bill.com/hc/en-us/articles/208197236
+    #
+    # Possible header keys:
+    #   * fromUserId
+    #   * toEmailAddresses
+    #   * ccMe
+    #   * subject
+    #
+    # Possible content keys:
+    #   * body
+    #
+    # Will use settings/content from the Default Email Template if
+    # nothing specified
+    def send_email(headers = {}, content = {})
+      options = { headers: headers, content: content }
+
       Query.execute("/SendInvoice.json", { invoiceId: id }.merge(options))
     end
 
