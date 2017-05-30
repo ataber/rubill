@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'rubill'
-  spec.version     = '0.2.0'
+  spec.version     = '0.2.1'
   spec.date        = Date.today.to_s
   spec.summary     = "Interface with Bill.com"
   spec.description = "A Ruby interface to Bill.com's API"
