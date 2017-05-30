@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    rubill (0.1.8)
-      json
-      rest-client
+    rubill (0.2.0)
+      json (~> 2.0)
+      rest-client (~> 2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -43,6 +43,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rake
-  rspec
+  rake (~> 10.3)
+  rspec (~> 3.1)
   rubill!
+
+BUNDLED WITH
+   1.14.6

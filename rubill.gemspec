@@ -1,36 +1,20 @@
-Gem::Specification.new do |s|
-  s.name        = 'rubill'
-  s.version     = '0.1.8'
-  s.date        = '2014-09-31'
-  s.summary     = "Interface with Bill.com"
-  s.description = "A Ruby interface to Bill.com's API"
-  s.authors     = ["Andrew Taber"]
-  s.email       = 'andrew.e.taber@gmail.com'
-  s.files       = [
-                    "lib/rubill.rb",
-                    "lib/rubill/session.rb",
-                    "lib/rubill/query.rb",
-                    "lib/rubill/base.rb",
-                    "lib/rubill/entities/bill.rb",
-                    "lib/rubill/entities/bill_payment.rb",
-                    "lib/rubill/entities/invoice.rb",
-                    "lib/rubill/entities/sent_payment.rb",
-                    "lib/rubill/entities/sent_bill_payment.rb",
-                    "lib/rubill/entities/received_payment.rb",
-                    "lib/rubill/entities/vendor.rb",
-                    "lib/rubill/entities/customer.rb",
-                    "lib/rubill/entities/customer_contact.rb",
-                    "lib/rubill/entities/attachment.rb",
-                    "lib/rubill/entities/location.rb",
-                    "lib/rubill/entities/actg_class.rb",
-                    "lib/rubill/entities/item.rb",
-                  ]
-  s.homepage    = 'http://rubygems.org/gems/rubill'
-  s.license     = 'MIT'
+Gem::Specification.new do |spec|
+  spec.name        = 'rubill'
+  spec.version     = '0.2.0'
+  spec.date        = Date.today.to_s
+  spec.summary     = "Interface with Bill.com"
+  spec.description = "A Ruby interface to Bill.com's API"
+  spec.authors     = ["Andrew Taber", "Aleksey Chebotarev"]
+  spec.email       = ['andrew.e.taber@gmail.com', 'aleksey.chebotarev@gmail.com']
+  spec.homepage    = 'http://rubygems.org/gems/rubill'
+  spec.license     = 'MIT'
 
-  s.add_dependency "rest-client"
-  s.add_dependency "json"
+  spec.files          = Dir['lib/*.rb']
+  spec.require_paths  = ["lib"]
 
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "rake"
+  spec.add_runtime_dependency "rest-client", "~> 2.0"
+  spec.add_runtime_dependency "json", "~> 2.0"
+
+  spec.add_development_dependency "rspec", "~> 3.1"
+  spec.add_development_dependency "rake", "~> 10.3"
 end
