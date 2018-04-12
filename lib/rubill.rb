@@ -21,6 +21,8 @@ module Rubill
     attr_accessor :org_id
     attr_writer :debug
     attr_writer :sandbox
+    attr_writer :mfaId
+    attr_writer :deviceId
 
     def required_keys
       %w(user_name password dev_key org_id)
